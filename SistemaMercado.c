@@ -38,7 +38,7 @@ int temNoCarrinho();           // Verifica se o produto ja esta no carrinho
 int totalProdutos = 0;
 int indiceCarrinho = 0; 
 
-Produto *listaProdutos[50];
+Produto *listaProdutos[100];
 Carrinho *carrinho[50];
 
 int main(){
@@ -106,7 +106,6 @@ void menu(){
 }
 
 void listarProdutos(){
-    // Lista todos os produtos cadastrados, exibindo o codigo, nome e preco de cada produto.
     if (totalProdutos == 0)
     {
         printf("\n\nA lista de produtos esta vazia.\n\n");
@@ -125,7 +124,6 @@ void listarProdutos(){
 }
 
 void comprarProduto() {
-    // seleciona um produto, atraves do codigo, e adiciona ao carrinho de compras.
     char cadMais = 1;
     int quantidade = 0;
 
@@ -144,17 +142,19 @@ void comprarProduto() {
                 printf("Quantidade adicional: ");
                 scanf("%d", &quantidade);
                 
-                // Atualiza a quantidade e subtotal no carrinho
                 carrinho[indice]->quantidade += quantidade;
                 carrinho[indice]->subtotal += (produtoEncontrado.preco * quantidade);
                 SystemClear();
                 printf("\nQuantidade do produto '%s' atualizada com sucesso!\n\n", produtoEncontrado.nome);
             } else {
-                // Se o produto não está no carrinho, solicita a quantidade
+                if (indiceCarrinho >= 50) {
+                    printf("Erro: Carrinho cheio. Não é possível adicionar mais produtos.\n");
+                    return;
+                }
+                
                 printf("Quantidade: ");
                 scanf("%d", &quantidade);
                 
-                // Cria um novo item no carrinho
                 Carrinho *itemCarrinho = (Carrinho *)calloc(1, sizeof(Carrinho));
                 itemCarrinho->produto = produtoEncontrado;
                 itemCarrinho->quantidade = quantidade;
@@ -162,7 +162,6 @@ void comprarProduto() {
                 double subtotal = itemCarrinho->produto.preco * itemCarrinho->quantidade;
                 itemCarrinho->subtotal = subtotal;
 
-                // Adiciona o item ao carrinho
                 carrinho[indiceCarrinho] = itemCarrinho;
                 SystemClear();
 
@@ -187,7 +186,6 @@ void comprarProduto() {
 }
 
 void visualizarCarrinho(){
-    // visualiza os produtos adicionados ao carrinho, com suas respectivas quantidades.
     if (indiceCarrinho == 0)
     {
         printf("\nO carrinho esta vazio, adicione produtos nele.\n\n");
@@ -204,9 +202,8 @@ void visualizarCarrinho(){
     }
 }
 
-void fecharPedido()
-{
-    // calcula o valor total da compra, exibe uma fatura detalhada e limpar o carrinho depois de finalizar o pedido
+void fecharPedido(){
+
     double total = 0;
 
     if(indiceCarrinho < 1){
@@ -237,16 +234,14 @@ void fecharPedido()
     printf("\nCarrinho esta vazio.\n");
 }
 
-void removerEspacos(char *str)
-{ // remove espaços para validar os nomes dos produtos e garantir que nao sejam repetidos
+void removerEspacos(char *str){ 
     int start = 0;
-    while (isspace(str[start]))
-    {
+    while (isspace(str[start])){
         start++;
     }
     int end = strlen(str) - 1;
-    while (end >= start && isspace(str[end]))
-    {
+
+    while (end >= start && isspace(str[end])){
         end--;
     }
 
@@ -328,14 +323,11 @@ void atualizarNome() {
             return;
         }
     }
-
-    // Caso nenhum produto seja encontrado com o código fornecido
     printf("Produto nao encontrado.\n");
 }
 
 Produto *cadastrarProduto(){
-    // cadastro de novos produtos, com um codigo unico, nome e preço.
-    Produto *produto = (Produto *)calloc(1, sizeof(Produto)); // alocaÃ§Ã£o da memÃ³ria para cadastrar o produto
+    Produto *produto = (Produto *)calloc(1, sizeof(Produto)); 
 
     int codigo;
     char nome[50];
@@ -345,12 +337,9 @@ Produto *cadastrarProduto(){
     printf("Codigo: ");
     scanf("%d", &codigo);
 
-    if (validaCodigo(codigo))
-    {
+    if (validaCodigo(codigo)){
         produto->codigo = codigo;
-    }
-    else
-    {
+    }else{
         return NULL;
     }
 
