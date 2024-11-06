@@ -35,7 +35,9 @@ bool validaCodigo(int codigo); // Verifica se o código ja foi utilizado em outr
 bool validaNome();             // Valida o nome digitado pelo usuario em caso de string vazia
 int temNoCarrinho();           // Verifica se o produto ja esta no carrinho
 
-int operacao = 0, totalProdutos = 0, indiceCarrinho = 0; // variaveis globais
+int operacao = 0;
+int totalProdutos = 0;
+int indiceCarrinho = 0; 
 
 Produto *listaProdutos[50];
 Carrinho *carrinho[50];
