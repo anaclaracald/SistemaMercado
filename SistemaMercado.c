@@ -146,7 +146,7 @@ void comprarProduto() {
             carrinho[indice]->subtotal += (produtoEncontrado.preco * quantidade);
             SystemClear();
             printf("\nQuantidade do produto '%s' atualizada com sucesso!\n\n", produtoEncontrado.nome);
-        } else if (indiceCarrinho <= 50){
+        } else if (indiceCarrinho <= 50 && indiceCarrinho >= 0){
             printf("Quantidade: ");
             scanf("%d", &quantidade);
             
