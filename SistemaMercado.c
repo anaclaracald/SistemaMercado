@@ -179,7 +179,7 @@ void comprarProduto() {
 
     } while (cadMais == 's' || cadMais == 'S');
 }
-   
+
 void visualizarCarrinho(){
     if (indiceCarrinho == 0)
     {
@@ -245,36 +245,24 @@ void removerEspacos(char *str){
 }
 
 void removerCarrinho(){ 
-    if (indiceCarrinho < 1) {
+    if(indiceCarrinho<1){
         printf("\nNao existem produtos para serem removidos, o carrinho esta vazio.\n\n");
         menu();
-        return;
     }
 
     char remMais;
 
-    do {
+    do{
         Produto produtoEncontrado = pegarProdutoPorCodigo();
-        bool produtoRemovido = false;
+        if (50 > produtoEncontrado.codigo > 0){
+            Carrinho *itemCarrinho = (Carrinho *)calloc(1, sizeof(Carrinho));
 
-        for (int i = 0; i < indiceCarrinho; i++) {
-            if (carrinho[i]->produto.codigo == produtoEncontrado.codigo) {
-                printf("\n%s removido do carrinho com sucesso!\n\n", carrinho[i]->produto.nome);
-                
-                free(carrinho[i]);
+            itemCarrinho->produto = produtoEncontrado;
+            carrinho[indiceCarrinho] = itemCarrinho;
 
-                for (int j = i; j < indiceCarrinho - 1; j++) {
-                    carrinho[j] = carrinho[j + 1];
-                }
-
-                indiceCarrinho--;
-                produtoRemovido = true;
-                break;
-            }
-        }
-
-        if (!produtoRemovido) {
-            printf("Produto nao encontrado no carrinho.\n");
+            printf("\n%s removido do carrinho com sucesso!\n\n", itemCarrinho->produto.nome);
+            free(itemCarrinho);
+            indiceCarrinho--;
         }
 
         getchar(); 
@@ -286,9 +274,9 @@ void removerCarrinho(){
             printf("Caractere invalido! Quer remover mais produtos? [s/n]: ");
             scanf("%c", &remMais);
         }
+        
 
-    } while (remMais == 's' || remMais == 'S');
-
+    } while (remMais == 's' || remMais =='S');
 }
 
 void atualizarNome() {
