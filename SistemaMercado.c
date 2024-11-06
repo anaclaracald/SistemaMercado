@@ -35,7 +35,6 @@ bool validaCodigo(int codigo); // Verifica se o código ja foi utilizado em outr
 bool validaNome();             // Valida o nome digitado pelo usuario em caso de string vazia
 int temNoCarrinho();           // Verifica se o produto ja esta no carrinho
 
-int operacao = 0;
 int totalProdutos = 0;
 int indiceCarrinho = 0; 
 
@@ -53,6 +52,7 @@ void SystemClear(){
 }
 
 void menu(){
+    int operacao;
     puts("\n=========================Sistema de Mercado========================\n");
     puts("[0] Sair do sistema");
     puts("[1] Menu");
@@ -431,7 +431,7 @@ bool validaNome(char *nome) {
     return true; 
 }
 
-int temNoCarrinho(char *nome){
+int temNoCarrinho(const char *nome){
     // verifica se o produto esta no carrinho
     for (int i = 0; i < indiceCarrinho; i++)
     {
