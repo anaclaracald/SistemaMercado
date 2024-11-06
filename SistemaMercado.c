@@ -134,42 +134,37 @@ void comprarProduto() {
 
     do {
         Produto produtoEncontrado = pegarProdutoPorCodigo();
-        
-        if (produtoEncontrado.codigo != 0) {
-            int indice = temNoCarrinho(produtoEncontrado.nome);
-            if (indice != -1) {
-                printf("Esse produto ja esta no carrinho. Atualizando quantidade.\n");
-                printf("Quantidade adicional: ");
-                scanf("%d", &quantidade);
-                
-                carrinho[indice]->quantidade += quantidade;
-                carrinho[indice]->subtotal += (produtoEncontrado.preco * quantidade);
-                SystemClear();
-                printf("\nQuantidade do produto '%s' atualizada com sucesso!\n\n", produtoEncontrado.nome);
-            } else {
-                if (indiceCarrinho >= 50) {
-                    printf("Erro: Carrinho cheio. Não é possível adicionar mais produtos.\n");
-                    return;
-                }
-                
-                printf("Quantidade: ");
-                scanf("%d", &quantidade);
-                
-                Carrinho *itemCarrinho = (Carrinho *)calloc(1, sizeof(Carrinho));
-                itemCarrinho->produto = produtoEncontrado;
-                itemCarrinho->quantidade = quantidade;
+        int indice = temNoCarrinho(produtoEncontrado.nome);
 
-                double subtotal = itemCarrinho->produto.preco * itemCarrinho->quantidade;
-                itemCarrinho->subtotal = subtotal;
+        if (produtoEncontrado.codigo != 0 && indice != -1 && indiceCarrinho <= 50) {
+            
+            printf("Esse produto ja esta no carrinho. Atualizando quantidade.\n");
+            printf("Quantidade adicional: ");
+            scanf("%d", &quantidade);
+            
+            carrinho[indice]->quantidade += quantidade;
+            carrinho[indice]->subtotal += (produtoEncontrado.preco * quantidade);
+            SystemClear();
+            printf("\nQuantidade do produto '%s' atualizada com sucesso!\n\n", produtoEncontrado.nome);
+        } else if (indiceCarrinho <= 50){
+            printf("Quantidade: ");
+            scanf("%d", &quantidade);
+            
+            Carrinho *itemCarrinho = (Carrinho *)calloc(1, sizeof(Carrinho));
+            itemCarrinho->produto = produtoEncontrado;
+            itemCarrinho->quantidade = quantidade;
 
-                carrinho[indiceCarrinho] = itemCarrinho;
-                SystemClear();
+            double subtotal = itemCarrinho->produto.preco * itemCarrinho->quantidade;
+            itemCarrinho->subtotal = subtotal;
 
-                printf("\n%s adicionado ao carrinho com sucesso!\n\n", itemCarrinho->produto.nome);
-                indiceCarrinho++;
-            }
+            carrinho[indiceCarrinho] = itemCarrinho;
+            SystemClear();
+
+            printf("\n%s adicionado ao carrinho com sucesso!\n\n", itemCarrinho->produto.nome);
+            indiceCarrinho++;
         } else {
             printf("\nProduto nao encontrado. Tente novamente.\n");
+            menu();
         }
 
         getchar(); 
