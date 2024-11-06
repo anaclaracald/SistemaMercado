@@ -105,15 +105,13 @@ void menu(){
 
 void listarProdutos(){
     // Lista todos os produtos cadastrados, exibindo o codigo, nome e preco de cada produto.
-    int i = 0;
-
     if (totalProdutos == 0)
     {
         printf("\n\nA lista de produtos esta vazia.\n\n");
     }
     else
     {
-        for (i = 0; i < totalProdutos; i++)
+        for (int i = 0; i < totalProdutos; i++)
         {
             Produto *produto = listaProdutos[i];
             printf("\n\n#Produto %d", i + 1);
@@ -188,15 +186,13 @@ void comprarProduto() {
 
 void visualizarCarrinho(){
     // visualiza os produtos adicionados ao carrinho, com suas respectivas quantidades.
-    int i = 0;
-
     if (indiceCarrinho == 0)
     {
         printf("\nO carrinho esta vazio, adicione produtos nele.\n\n");
     }
     else
     {
-        for (i = 0; i < indiceCarrinho; i++)
+        for (int i = 0; i < indiceCarrinho; i++)
         {
             printf("\nProduto: %s\n", carrinho[i]->produto.nome);
             printf("Quantidade: %d\n", carrinho[i]->quantidade);
@@ -209,7 +205,6 @@ void visualizarCarrinho(){
 void fecharPedido()
 {
     // calcula o valor total da compra, exibe uma fatura detalhada e limpar o carrinho depois de finalizar o pedido
-    int i = 0;
     double total = 0;
 
     if(indiceCarrinho < 1){
@@ -217,7 +212,7 @@ void fecharPedido()
         menu();
     }
 
-    for (i = 0; i < indiceCarrinho; i++)
+    for (int i = 0; i < indiceCarrinho; i++)
     {
         total += carrinho[i]->subtotal;
     }
@@ -225,13 +220,13 @@ void fecharPedido()
     printf("Total da compra: R$%.2f\n", total);
 
     printf("\nFatura detalhada:\n");
-    for (i = 0; i < indiceCarrinho; i++)
+    for (int i = 0; i < indiceCarrinho; i++)
     {
         printf("\n%s - Quantidade: %d - Subtotal: R$%.2f\n",
                carrinho[i]->produto.nome, carrinho[i]->quantidade, carrinho[i]->subtotal);
     }
 
-    for (i = 0; i < indiceCarrinho; i++)
+    for (int i = 0; i < indiceCarrinho; i++)
     {
         free(carrinho[i]);
     }
@@ -385,13 +380,13 @@ Produto *cadastrarProduto(){
 
 Produto pegarProdutoPorCodigo(){
     // Retorna um produto a partir do codigo informado.
-    int codComprarProduto = 0, i = 0;
+    int codComprarProduto = 0;
     Produto produtoNaoEncontrado = {0, "", 0};
 
     printf("Digite o codigo do produto: ");
     scanf("%d", &codComprarProduto);
 
-    for (i = 0; i <= totalProdutos; i++)
+    for (int i = 0; i <= totalProdutos; i++)
     {
         if (listaProdutos[i]->codigo == codComprarProduto)
         {
@@ -405,9 +400,7 @@ Produto pegarProdutoPorCodigo(){
 
 bool validaCodigo(int codigo){
     // verifica se o codigo e unico
-    int i = 0;
-
-    for (i = 0; i < totalProdutos; i++){
+    for (int i = 0; i < totalProdutos; i++){
         if (codigo == listaProdutos[i]->codigo)
         {
             printf("\nCodigo ja utilizado.\n");
