@@ -244,8 +244,7 @@ void removerEspacos(char *str){
     str[end - start + 1] = '\0';
 }
 
-void removerCarrinho()
-{   // remove um produto do carrinho
+void removerCarrinho(){ 
     if(indiceCarrinho<1){
         printf("\nNao existem produtos para serem removidos, o carrinho esta vazio.\n\n");
         menu();
@@ -253,11 +252,9 @@ void removerCarrinho()
 
     char remMais;
 
-    do
-    {
+    do{
         Produto produtoEncontrado = pegarProdutoPorCodigo();
-        if (produtoEncontrado.codigo != 0)
-        {
+        if (50 > produtoEncontrado.codigo > 0){
             Carrinho *itemCarrinho = (Carrinho *)calloc(1, sizeof(Carrinho));
 
             itemCarrinho->produto = produtoEncontrado;
@@ -266,11 +263,6 @@ void removerCarrinho()
             printf("\n%s removido do carrinho com sucesso!\n\n", itemCarrinho->produto.nome);
             free(itemCarrinho);
             indiceCarrinho--;
-        }
-
-        if(indiceCarrinho<1){
-            printf("\nNao existem produtos para serem removidos, o carrinho esta vazio.\n\n");
-            menu();
         }
 
         getchar(); 
@@ -288,7 +280,6 @@ void removerCarrinho()
 }
 
 void atualizarNome() {
-    // O usuario pode atualizar o nome de um produto ja cadastrado atraves do seu codigo
     int codigo;
     char novoNome[50];
 
@@ -365,17 +356,14 @@ Produto *cadastrarProduto(){
 }
 
 Produto pegarProdutoPorCodigo(){
-    // Retorna um produto a partir do codigo informado.
     int codComprarProduto = 0;
     Produto produtoNaoEncontrado = {0, "", 0};
 
     printf("Digite o codigo do produto: ");
     scanf("%d", &codComprarProduto);
 
-    for (int i = 0; i <= totalProdutos; i++)
-    {
-        if (listaProdutos[i]->codigo == codComprarProduto)
-        {
+    for (int i = 0; i <= totalProdutos; i++){
+        if (listaProdutos[i]->codigo == codComprarProduto){
             return *listaProdutos[i];
         }
     }
@@ -385,7 +373,6 @@ Produto pegarProdutoPorCodigo(){
 }
 
 bool validaCodigo(int codigo){
-    // verifica se o codigo e unico
     for (int i = 0; i < totalProdutos; i++){
         if (codigo == listaProdutos[i]->codigo)
         {
@@ -397,7 +384,6 @@ bool validaCodigo(int codigo){
 }
 
 bool validaNome(char *nome) {
-    // verifica se o nome esta repetido
     removerEspacos(nome);
     
     if (strlen(nome) < 2) {
@@ -416,7 +402,6 @@ bool validaNome(char *nome) {
 }
 
 int temNoCarrinho(const char *nome){
-    // verifica se o produto esta no carrinho
     for (int i = 0; i < indiceCarrinho; i++)
     {
 
